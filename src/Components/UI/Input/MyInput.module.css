@@ -1,0 +1,12 @@
+.myInp{
+    width: 150px;
+    height: 25px;
+    padding: 0px 0 0 5px;
+    border: 1px solid rgb(120, 223, 230);
+    outline: none;
+    transition: all .25s ease-in-out;
+}
+
+.myInp:focus{
+    border: 1px solid rgb(230, 120, 120)
+}
