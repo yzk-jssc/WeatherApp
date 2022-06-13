@@ -11,7 +11,7 @@
     justify-content: center;
 }
 
-.App {
+.weather__app {
     margin-top: 2vw;
     margin: 2vw auto 0 auto;
     text-align: center;
@@ -21,11 +21,6 @@
 
 }
 
-.weather__form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .weather__item {
     width: 150px;
@@ -38,16 +33,21 @@
 .city__current{
     color: rgb(120, 223, 230);
     text-shadow: 
-		 0   -1px 0   #E67878,
-		 0    1px 0   #E67878,
-		 1px -0   0   #E67878,
-		-1px  0   0   #E67878,
-		 1px  0   0   #E67878,
-		 1px  1px 0   #E67878,
-		-1px -1px 0   #E67878,
-		 1px -1px 0   #E67878,
-		-1px  1px 0   #E67878,
-		 1px  1px 0   #E67878;
+		 0   -1px 0   #000000,
+		 0    1px 0   #000000,
+		 1px -0   0   #000000,
+		-1px  0   0   #000000,
+		 1px  0   0   #000000,
+		 1px  1px 0   #000000,
+		-1px -1px 0   #000000,
+		 1px -1px 0   #000000,
+		-1px  1px 0   #000000,
+		 1px  1px 0   #000000;
+}
+
+.city__wrong{
+    font-weight: lighter;
+    color: rgb(207, 73, 73);
 }
 
 .weather__item__style{
@@ -72,7 +72,6 @@
     color: rgb(120, 223, 230);
     width: 100%;
     border: 1px solid #E67878;
-    border-radius: 10%;
 }
 
 .weather__feelTemp{
