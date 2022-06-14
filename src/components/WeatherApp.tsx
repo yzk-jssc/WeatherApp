@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { CityContext } from "../context/CItyContext";
-import WeatherItem from "./item/WeatherItem";
+import WeatherList from "./list/WeatherList";
 import WeatherSearch from "./search/WeatherSearch";
 
 interface WeatherAppProps {
@@ -9,19 +9,15 @@ interface WeatherAppProps {
  
 const WeatherApp: FunctionComponent<WeatherAppProps> = () => {
 
-    const [city, setCity] = useState<string>('')
-       
-
-
+    const [city, setCity] = useState<string>('moscow')
+    
     return ( 
         <div className="weather__app">
             <CityContext.Provider value = {{city}}>
 
             <WeatherSearch setCity={setCity}/>
 
-                <div className="weather__item__style">
-                    <WeatherItem/>
-                </div>
+                    <WeatherList/>
 
             </CityContext.Provider>
 
