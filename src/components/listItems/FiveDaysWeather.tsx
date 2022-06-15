@@ -6,10 +6,10 @@ import {
     useEffect,
     useState,
 } from "react";
-import { GetWeatherData } from "../../API/WeatherService";
+import { GetWeekWeatherData } from "../../API/WeatherWeekService";
 import { CityContext } from "../../context/CItyContext";
 import { cityDataInfo } from "../../types/CityTypes";
-import { weekWeatherDataInfo } from "../../types/weatherTypes";
+import { weatherFiveInfo } from "../../types/weatherTypes";
 import { monthes } from "../list/monthes";
 
 interface FiveDaysWeatherProps {
@@ -22,9 +22,15 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
     type,
 }) => {
 
+    const date = new Date();
+    const day = date.getDate(),
+        month = date.getMonth(); 
+
     const { city } = useContext(CityContext);
+    type NewType = weatherFiveInfo[];
+
     const [weekWeather, setWeekWeather] = 
-    useState<weekWeatherDataInfo[] | null>(null);
+    useState<NewType | null>(null);
 
     const [cityInfo, setCityInfo] = useState<cityDataInfo | null>(null);
 
@@ -33,9 +39,10 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
         setError(false);
         setWeekWeather(null);
         try {
-            const resData = await GetWeatherData(city, type);
+            const resData = await GetWeekWeatherData(city, type);
+            console.log(resData);
             
-            setWeekWeather(resData.list.slice(0,5));
+            setWeekWeather(resData?.list.filter(dayTime=>dayTime.dt_txt.includes('15:00:00')));
             setCityInfo(resData.city);
         } catch (error) {
 
@@ -43,23 +50,27 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
         }
     };
 
+
     useEffect(() => {
         getDaysWeather(city, type);
-    }, [city]);
+        
+    }, [city,type]);
 
     return (
         <>
             {weekWeather && (
                 <div className="weather__about">
+                    
                     {cityInfo && (
                         <h1 className="city__current">{cityInfo.name}</h1>
                     )}
+                    <div className="weather__date">
+                        <span className="week__days">{day}-{day+4} </span>
+                        <span className="week__month">{monthes[month]}</span>
+                    </div>
                     <div className="weather__list">
                         {weekWeather.map((weatherDay) => (
                             <div key={weatherDay.dt_txt} className="weather__item ">
-                                {/* <div className="weather__date">
-                                    {day}
-                                </div> */}
                                 <div className="weather__temp">
                                     {"Should be " +
                                         Math.round(weatherDay.main.temp) +

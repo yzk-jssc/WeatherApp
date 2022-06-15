@@ -9,7 +9,8 @@ interface WeatherAppProps {
  
 const WeatherApp: FunctionComponent<WeatherAppProps> = () => {
 
-    const [city, setCity] = useState<string>('moscow')
+    const [city, setCity] = useState<string>('')
+
     
     return ( 
         <div className="weather__app">
@@ -17,7 +18,9 @@ const WeatherApp: FunctionComponent<WeatherAppProps> = () => {
 
             <WeatherSearch setCity={setCity}/>
 
-                    <WeatherList/>
+                {city.length
+                ?<WeatherList/>
+                : <div>Enter your city</div> }
 
             </CityContext.Provider>
 

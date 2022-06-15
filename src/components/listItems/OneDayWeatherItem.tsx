@@ -6,7 +6,7 @@ import {
     useEffect,
     useState,
 } from "react";
-import { GetWeatherData } from "../../API/WeatherService";
+import { GetDayWeatherData } from "../../API/WeatherDayService";
 import { CityContext } from "../../context/CItyContext";
 import { weatherDayData } from "../../types/weatherTypes";
 import { monthes } from "../list/monthes";
@@ -23,12 +23,11 @@ const OneDayItem: FunctionComponent<OneDayItemProps> = ({ setError, type }) => {
 
     const { city } = useContext(CityContext);
     const [dayWeather, setDayWeather] = useState<weatherDayData | null>(null);
-
     const getDayWeather = async (city: string, type: string) => {
         setError(false);
         setDayWeather(null);
         try {
-            const resData = await GetWeatherData(city, type);
+            const resData = await GetDayWeatherData(city, type);
             setDayWeather({
                 temp: resData.main.temp,
                 feels_like: resData.main.feels_like,

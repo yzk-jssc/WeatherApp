@@ -1,5 +1,4 @@
 import React,{ ChangeEvent, FunctionComponent, useState } from "react";
-import { weekWeatherDataInfo } from "../../types/weatherTypes";
 import FiveDaysWeather from "../listItems/FiveDaysWeather";
 import OneDayItem from "../listItems/OneDayWeatherItem";
 import MySelect from "../UI/select/MySelect";
@@ -26,6 +25,7 @@ const WeatherList: FunctionComponent<WeatherListProps> = () => {
     return (
         <div className="weather__info">
             <MySelect
+            className='weather__select'
             defaulValue="Chose for 1 or 5 days"
             value={weatherType} 
             onChange={weatherChangeHandler}

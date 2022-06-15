@@ -21,10 +21,13 @@
 
 }
 
+.weather__select{
+    display: block;
+    margin-top: 10px;
+}
 
 .weather__item {
     width: 150px;
-    height: 200px;
     text-align: center;
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.342);
     padding: 15px;
@@ -32,6 +35,9 @@
 
 .city__current{
     color: rgb(120, 223, 230);
+    margin-top: 0;
+
+
     text-shadow: 
 		 0   -1px 0   #000000,
 		 0    1px 0   #000000,
@@ -43,6 +49,14 @@
 		 1px -1px 0   #000000,
 		-1px  1px 0   #000000,
 		 1px  1px 0   #000000;
+}
+
+.city__current::before{
+    display: block;
+    content: '';
+
+    border-top: 1px dashed black;
+    margin: 5px;
 }
 
 .city__wrong{
@@ -63,6 +77,7 @@
     font-weight: bold;
     font-style: italic;
     color: #e67878;
+    margin-bottom: 5px;
 }
 
 .weather__list{
