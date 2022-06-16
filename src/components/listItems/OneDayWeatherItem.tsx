@@ -1,3 +1,4 @@
+import React from "react";
 import {
     Dispatch,
     FunctionComponent,
@@ -6,36 +7,43 @@ import {
     useEffect,
     useState,
 } from "react";
-import { GetDayWeatherData } from "../../API/WeatherDayService";
+import { GetWeatherData } from "../../API/WeatherService";
 import { CityContext } from "../../context/CItyContext";
-import { weatherDayData } from "../../types/weatherTypes";
+import { weatherDayInfo } from "../../types/weatherTypes";
 import { monthes } from "../list/monthes";
+import './daysWeather.css'
 
 interface OneDayItemProps {
     setError: Dispatch<SetStateAction<boolean>>;
     type: string;
 }
 
-const OneDayItem: FunctionComponent<OneDayItemProps> = ({ setError, type }) => {
+const OneDayItem: FunctionComponent<OneDayItemProps> = ({ setError, type, }) => {
     const date = new Date();
     const day = date.getDate(),
         month = date.getMonth();
 
     const { city } = useContext(CityContext);
-    const [dayWeather, setDayWeather] = useState<weatherDayData | null>(null);
+    const [dayWeather, setDayWeather] = useState<weatherDayInfo | null>(null);
+
+
+
     const getDayWeather = async (city: string, type: string) => {
         setError(false);
         setDayWeather(null);
         try {
-            const resData = await GetDayWeatherData(city, type);
-            setDayWeather({
-                temp: resData.main.temp,
-                feels_like: resData.main.feels_like,
-                id: resData.sys.id,
-                weatherState: resData.weather[0].main,
-                name: resData.name,
-            });
+            const resData = await GetWeatherData(city, type);
             
+            setDayWeather({
+                weather: {
+                    main:resData.weather?.main
+                },
+                main:{
+                    temp:resData.main.temp,
+                    feels_like:resData.main.feels_like
+                },
+                name:resData.name
+            });
         } catch (error) {
             console.log(error);
 
@@ -45,11 +53,12 @@ const OneDayItem: FunctionComponent<OneDayItemProps> = ({ setError, type }) => {
 
     useEffect(() => {
         getDayWeather(city, type);
-    }, [city]);
+
+    }, [city,type]);
 
     return (
         <>
-            <h1 className="city__current">{dayWeather?.name}</h1>
+             <h1 className="city__current">{dayWeather?.name}</h1>
 
             <div className="weather__item__style">
             {dayWeather && (
@@ -59,11 +68,11 @@ const OneDayItem: FunctionComponent<OneDayItemProps> = ({ setError, type }) => {
                         {day + ` ${monthes[month]}`}
                     </div>
                     <div className="weather__temp">
-                        {"Now is " + Math.round(dayWeather.temp) + " °C"}
+                        {"Today will be " + Math.round(dayWeather.main.temp) + " °C"} 
                     </div>
                     <div className="weather__feelTemp">
                         {"feels like " +
-                            Math.round(dayWeather.feels_like) +
+                            Math.round(dayWeather.main.feels_like) +
                             " °C"}
                     </div>
                 </div>
@@ -74,3 +83,5 @@ const OneDayItem: FunctionComponent<OneDayItemProps> = ({ setError, type }) => {
 };
 
 export default OneDayItem;
+
+

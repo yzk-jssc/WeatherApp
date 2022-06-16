@@ -14,13 +14,16 @@ const WeatherApp: FunctionComponent<WeatherAppProps> = () => {
     
     return ( 
         <div className="weather__app">
+            <h1 >Weather widget</h1>
             <CityContext.Provider value = {{city}}>
+            <div className="weather__input">
+                <WeatherSearch setCity={setCity}/>
 
-            <WeatherSearch setCity={setCity}/>
+            </div>
 
                 {city.length
                 ?<WeatherList/>
-                : <div>Enter your city</div> }
+                : <h3>Enter your city</h3> }
 
             </CityContext.Provider>
 

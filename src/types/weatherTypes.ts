@@ -1,28 +1,33 @@
 import { cityDataInfo } from "./CityTypes";
 
-export interface weatherDayData {
-    weatherState: string;
-    // icon:?;
-    temp: number;
-    feels_like: number;
-    id: number;
-    name: string;
+export interface weatherDayData extends weatherFiveData{
+    weather: { main: string };
+    main: { temp: number; feels_like: number };
+    name:string;
+    sys?:{id:string}
+}
+
+export interface weatherDayInfo{
+    weather: { main: string };
+    main: { temp: number; feels_like: number };
+    name:string;
+
+}
+
+export interface weatherFiveData {
+    list:weatherFiveInfo[]
+    city:cityDataInfo;
+
 }
 
 export interface weatherFiveInfo{
-    weather: { weatherState: string };
+    weather: { main: string };
     main: { temp: number; feels_like: number };
     dt_txt:string;
 }
 
-export interface weekWeatherDataInfo {
-    list:weatherFiveInfo[]
-   city:cityDataInfo;
-
-}
-
 export interface weatherDataList{
-    list:weekWeatherDataInfo
+    list:weatherFiveData
 }
 
 
@@ -31,4 +36,4 @@ export interface weatherOptions {
     name: string;
 }
 
-export type weatherGetData = weekWeatherDataInfo | weatherDayData
+export type weatherGetData = weatherFiveData | weatherDayData

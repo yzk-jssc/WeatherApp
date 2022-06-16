@@ -6,7 +6,7 @@ import {
     useEffect,
     useState,
 } from "react";
-import { GetWeekWeatherData } from "../../API/WeatherWeekService";
+import { GetWeatherData } from "../../API/WeatherService";
 import { CityContext } from "../../context/CItyContext";
 import { cityDataInfo } from "../../types/CityTypes";
 import { weatherFiveInfo } from "../../types/weatherTypes";
@@ -31,16 +31,17 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
 
     const [weekWeather, setWeekWeather] = 
     useState<NewType | null>(null);
-
     const [cityInfo, setCityInfo] = useState<cityDataInfo | null>(null);
+    
 
-    const getDaysWeather = async (city: string, type: string) => {
+    
 
+    let getDaysWeather =async (city: string, type: string) => {
         setError(false);
         setWeekWeather(null);
         try {
-            const resData = await GetWeekWeatherData(city, type);
-            console.log(resData);
+
+            const resData = await GetWeatherData(city,type);
             
             setWeekWeather(resData?.list.filter(dayTime=>dayTime.dt_txt.includes('15:00:00')));
             setCityInfo(resData.city);
@@ -48,9 +49,10 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
 
             setError(true);
         }
+
     };
-
-
+    console.log(123);
+    
     useEffect(() => {
         getDaysWeather(city, type);
         
@@ -72,7 +74,7 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
                         {weekWeather.map((weatherDay) => (
                             <div key={weatherDay.dt_txt} className="weather__item ">
                                 <div className="weather__temp">
-                                    {"Should be " +
+                                    {"Probably " +
                                         Math.round(weatherDay.main.temp) +
                                         " °C"}
                                 </div>
@@ -90,4 +92,4 @@ const FiveDaysWeather: FunctionComponent<FiveDaysWeatherProps> = ({
     );
 };
 
-export default FiveDaysWeather;
+export default  FiveDaysWeather;
